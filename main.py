@@ -43,6 +43,11 @@ def calcular_mascara_borde(mapa, x, y, recursive=True):
     - 0 significa que no requiere borde.
     - Un valor entre 1 y 15 es el código de la máscara (0001 a 1111 binario).
     """
+    if recursive:
+        mascara_actual = calcular_mascara_borde(mapa, x, y, False)
+        if mascara_actual == 15:
+            return mascara_actual
+    
     # --- BITS DE MÁSCARA (Norte, Este, Sur, Oeste) ---
     # Se utiliza un bit para cada dirección cardinal
     BIT_NORTE = 1  # 2^0
@@ -78,7 +83,7 @@ def calcular_mascara_borde(mapa, x, y, recursive=True):
                 terreno_vecino = calcular_terreno_base(mapa, nx, ny)
                 # Si es un patch, invertir la lógica
                 # Por ejemplo, un parche de agua es como si fuese arena
-                if mascara_vecino in [5,7,10,11,13,14, 15]:
+                if mascara_vecino in [5,7,10,11,13,14,15]:
                     igual_terreno = target_terreno == terreno_vecino
             # Si el vecino NO es el mismo terreno, se requiere un borde
             # *o* si el vecino es el 'terreno central' que queremos bordear.
@@ -92,6 +97,9 @@ def calcular_mascara_borde(mapa, x, y, recursive=True):
 def calcular_terreno_base(mapa, x, y):
     terreno_actual = mapa[y][x]
     candidato = terreno_actual
+    mascara_actual = calcular_mascara_borde(mapa, x, y, False)
+    if mascara_actual in [5,7,10,11,13,14,15]:
+        candidato = None
     VECINOS = [
         (-1, 0),
         (0, -1),
@@ -104,7 +112,6 @@ def calcular_terreno_base(mapa, x, y):
         if 0 <= nx < ANCHO and 0 <= ny < ALTO:
             mascara_vecino = calcular_mascara_borde(mapa, nx, ny, False)
             if mascara_vecino == 15:
-                candidato = None
                 for dx2,dy2 in VECINOS:
                     nx2 = nx + dx2
                     ny2 = ny + dy2
@@ -118,10 +125,15 @@ def calcular_terreno_base(mapa, x, y):
                     nx2 = nx + dx2
                     ny2 = ny + dy2
                     if 0 <= nx2 < ANCHO and 0 <= ny2 < ALTO:
+                        if not candidato:
+                            candidato = mapa[y][x]
                         if PRIORIDAD_TERRENO[mapa[ny2][nx2]] < PRIORIDAD_TERRENO[candidato]:
                             candidato = mapa[ny2][nx2]
-            elif PRIORIDAD_TERRENO[mapa[ny][nx]] < PRIORIDAD_TERRENO[candidato]:
-                candidato = mapa[ny][nx]
+            else:
+                if not candidato:
+                    candidato = mapa[y][x]
+                if PRIORIDAD_TERRENO[mapa[ny][nx]] < PRIORIDAD_TERRENO[candidato]:
+                    candidato = mapa[ny][nx]
     return candidato
 
 def autotile(mapa_terreno, name):

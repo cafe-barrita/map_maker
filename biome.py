@@ -182,6 +182,26 @@ BIOMES = {
             "lava": 1.0
         }
     },
+    "hotspring": {
+        "ELEVACION": {
+            "water": 0.42,
+            "sand": 0.42,
+            "grass": 0.47,
+            "rock": 1.0
+        },
+        "HUMEDAD": {
+            "sand": 0.25,
+            "ground": 0.35,
+            "grass": 0.55,
+            "dark_grass": 1.0
+        },
+        "TEMPERATURA": {
+            "dark_ground": 0.25,
+            "rock": 0.45,
+            "dark_rock": 0.59,
+            "lava": 1.0
+        }
+    },
 }
 
 def asignar_terrenos(mapa_elevacion, mapa_humedad, mapa_temperatura,
