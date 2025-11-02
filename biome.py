@@ -186,7 +186,7 @@ BIOMES = {
         "ELEVACION": {
             "water": 0.42,
             "sand": 0.42,
-            "grass": 0.47,
+            "grass": 0.45,
             "rock": 1.0
         },
         "HUMEDAD": {
@@ -197,8 +197,8 @@ BIOMES = {
         },
         "TEMPERATURA": {
             "dark_ground": 0.25,
-            "rock": 0.45,
-            "dark_rock": 0.59,
+            "rock": 0.5,
+            "dark_rock": 0.55,
             "lava": 1.0
         }
     },

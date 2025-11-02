@@ -129,10 +129,7 @@ def calcular_terreno_base(mapa, x, y):
                             candidato = mapa[y][x]
                         if PRIORIDAD_TERRENO[mapa[ny2][nx2]] < PRIORIDAD_TERRENO[candidato]:
                             candidato = mapa[ny2][nx2]
-            else:
-                if not candidato:
-                    candidato = mapa[y][x]
-                if PRIORIDAD_TERRENO[mapa[ny][nx]] < PRIORIDAD_TERRENO[candidato]:
+            elif not candidato or PRIORIDAD_TERRENO[mapa[ny][nx]] < PRIORIDAD_TERRENO[candidato]:
                     candidato = mapa[ny][nx]
     return candidato
 
