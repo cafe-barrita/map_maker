@@ -20,6 +20,10 @@ TERRAINS = {
             "bottom_left": {"x": 0, "y": 10},
             "bottom": {"x": 1, "y": 10},
             "bottom_right": {"x": 2, "y": 10},
+            "upper_left_diagonal": {"x": 2, "y": 7},
+            "upper_right_diagonal": {"x": 1, "y": 7},
+            "lower_left_diagonal": {"x": 2, "y": 6},
+            "lower_right_diagonal": {"x": 1, "y": 6},
         }
     },
     "water": {
@@ -38,6 +42,10 @@ TERRAINS = {
             "bottom_left": {"x": 18, "y": 4},
             "bottom": {"x": 19, "y": 4},
             "bottom_right": {"x": 20, "y": 4},
+            "upper_left_diagonal": {"x": 20, "y": 1},
+            "upper_right_diagonal": {"x": 19, "y": 1},
+            "lower_left_diagonal": {"x": 20, "y": 0},
+            "lower_right_diagonal": {"x": 19, "y": 0},
         }
     },
     "sand": {
@@ -56,6 +64,10 @@ TERRAINS = {
             "bottom_left": {"x": 0, "y": 16},
             "bottom": {"x": 1, "y": 16},
             "bottom_right": {"x": 2, "y": 16},
+            "upper_left_diagonal": {"x": 2, "y": 13},
+            "upper_right_diagonal": {"x": 1, "y": 13},
+            "lower_left_diagonal": {"x": 2, "y": 12},
+            "lower_right_diagonal": {"x": 1, "y": 12},
         }
     },
     "ground": {
@@ -73,6 +85,10 @@ TERRAINS = {
             "bottom_left": {"x": 0, "y": 4},
             "bottom": {"x": 1, "y": 4},
             "bottom_right": {"x": 2, "y": 4},
+            "upper_left_diagonal": {"x": 2, "y": 1},
+            "upper_right_diagonal": {"x": 1, "y": 1},
+            "lower_left_diagonal": {"x": 2, "y": 0},
+            "lower_right_diagonal": {"x": 1, "y": 0},
         }
     },
     "dark_grass": {
@@ -91,6 +107,10 @@ TERRAINS = {
             "bottom_left": {"x": 6, "y": 10},
             "bottom": {"x": 7, "y": 10},
             "bottom_right": {"x": 8, "y": 10},
+            "upper_left_diagonal": {"x": 8, "y": 7},
+            "upper_right_diagonal": {"x": 7, "y": 7},
+            "lower_left_diagonal": {"x": 8, "y": 6},
+            "lower_right_diagonal": {"x": 7, "y": 6},
         }
     },
     "dark_ground": {
@@ -108,6 +128,10 @@ TERRAINS = {
             "bottom_left": {"x": 3, "y": 4},
             "bottom": {"x": 4, "y": 4},
             "bottom_right": {"x": 5, "y": 4},
+            "upper_left_diagonal": {"x": 5, "y": 1},
+            "upper_right_diagonal": {"x": 4, "y": 1},
+            "lower_left_diagonal": {"x": 5, "y": 0},
+            "lower_right_diagonal": {"x": 4, "y": 0},
         }
     },
     "rock": {
@@ -125,6 +149,10 @@ TERRAINS = {
             "bottom_left": {"x": 6, "y": 4},
             "bottom": {"x": 7, "y": 4},
             "bottom_right": {"x": 8, "y": 4},
+            "upper_left_diagonal": {"x": 8, "y": 1},
+            "upper_right_diagonal": {"x": 7, "y": 1},
+            "lower_left_diagonal": {"x": 8, "y": 0},
+            "lower_right_diagonal": {"x": 7, "y": 0},
         }
     },
     "dark_rock": {
@@ -142,6 +170,10 @@ TERRAINS = {
             "bottom_left": {"x": 12, "y": 16},
             "bottom": {"x": 13, "y": 16},
             "bottom_right": {"x": 14, "y": 16},
+            "upper_left_diagonal": {"x": 14, "y": 13},
+            "upper_right_diagonal": {"x": 13, "y": 13},
+            "lower_left_diagonal": {"x": 14, "y": 12},
+            "lower_right_diagonal": {"x": 13, "y": 12},
         }
     },
     "lava": {
@@ -160,6 +192,10 @@ TERRAINS = {
             "bottom_left": {"x": 9, "y": 16},
             "bottom": {"x": 10, "y": 16},
             "bottom_right": {"x": 11, "y": 16},
+            "upper_left_diagonal": {"x": 11, "y": 13},
+            "upper_right_diagonal": {"x": 10, "y": 13},
+            "lower_left_diagonal": {"x": 11, "y": 12},
+            "lower_right_diagonal": {"x": 10, "y": 12},
         }
     },
 }

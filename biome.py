@@ -85,14 +85,14 @@ BIOMES = {
     "grassland": {
         "ELEVACION": {
             "water": 0.15,
-            "sand": 0.35,
-            "grass": 0.6,
+            "sand": 0.37,
+            "grass": 0.57,
             "rock": 1.0
         },
         "HUMEDAD": {
             "sand": 0.1,
             "ground": 0.2,
-            "grass": 0.6,
+            "grass": 0.57,
             "dark_grass": 1.0
         },
         "TEMPERATURA": {
@@ -106,11 +106,11 @@ BIOMES = {
         "ELEVACION": {
             "water": 0.3,
             "sand": 0.3,
-            "grass": 0.57,
+            "grass": 0.58,
             "rock": 1.0
         },
         "HUMEDAD": {
-            "sand": 0.5,
+            "sand": 0.52,
             "ground": 0.62,
             "grass": 0.9,
             "dark_grass": 1.0
@@ -166,7 +166,7 @@ BIOMES = {
         "ELEVACION": {
             "water": 0.1,
             "sand": 0.2,
-            "grass": 0.4,
+            "grass": 0.38,
             "rock": 1.0
         },
         "HUMEDAD": {
@@ -177,8 +177,8 @@ BIOMES = {
         },
         "TEMPERATURA": {
             "dark_ground": 0.25,
-            "rock": 0.45,
-            "dark_rock": 0.54,
+            "rock": 0.44,
+            "dark_rock": 0.52,
             "lava": 1.0
         }
     },

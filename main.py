@@ -45,7 +45,7 @@ def calcular_mascara_borde(mapa, x, y, recursive=True):
     """
     if recursive:
         mascara_actual = calcular_mascara_borde(mapa, x, y, False)
-        if mascara_actual == 15:
+        if mascara_actual&15 == 15:
             return mascara_actual
     
     # --- BITS DE MÁSCARA (Norte, Este, Sur, Oeste) ---
@@ -54,13 +54,21 @@ def calcular_mascara_borde(mapa, x, y, recursive=True):
     BIT_ESTE = 2   # 2^1
     BIT_SUR = 4    # 2^2
     BIT_OESTE = 8  # 2^3
+    BIT_NOROESTE = 16  # 2^4
+    BIT_NORESTE = 32   # 2^5
+    BIT_SUROESTE = 64    # 2^6
+    BIT_SURESTE = 128  # 2^7
     
     # Lista de direcciones y sus desplazamientos (dy, dx) y valores de bit
     VECINOS = [
         (-1, 0, BIT_NORTE),  # Norte
         ( 0, 1, BIT_ESTE),   # Este
         ( 1, 0, BIT_SUR),    # Sur
-        ( 0,-1, BIT_OESTE)   # Oeste
+        ( 0,-1, BIT_OESTE),   # Oeste
+        (-1, -1, BIT_NOROESTE),  # Norte
+        ( 1, -1, BIT_SUROESTE),   # Este
+        ( -1, 1, BIT_NORESTE),    # Sur
+        ( 1, 1, BIT_SURESTE)   # Oeste
     ]
 
     target_terreno = mapa[y][x]
@@ -83,7 +91,7 @@ def calcular_mascara_borde(mapa, x, y, recursive=True):
                 terreno_vecino = calcular_terreno_base(mapa, nx, ny)
                 # Si es un patch, invertir la lógica
                 # Por ejemplo, un parche de agua es como si fuese arena
-                if mascara_vecino in [5,7,10,11,13,14,15]:
+                if (mascara_vecino & 15) in [5,7,10,11,13,14,15]:
                     igual_terreno = target_terreno == terreno_vecino
             # Si el vecino NO es el mismo terreno, se requiere un borde
             # *o* si el vecino es el 'terreno central' que queremos bordear.
@@ -98,20 +106,24 @@ def calcular_terreno_base(mapa, x, y):
     terreno_actual = mapa[y][x]
     candidato = terreno_actual
     mascara_actual = calcular_mascara_borde(mapa, x, y, False)
-    if mascara_actual in [5,7,10,11,13,14,15]:
+    if mascara_actual&15 in [5,7,10,11,13,14,15]:
         candidato = None
     VECINOS = [
         (-1, 0),
         (0, -1),
         (1, 0),
-        (0, 1)
+        (0, 1),
+        (-1, -1),
+        (1, -1),
+        (-1, 1),
+        (1, 1),
     ]
     for dx,dy in VECINOS:
         nx = x + dx
         ny = y + dy
         if 0 <= nx < ANCHO and 0 <= ny < ALTO:
-            mascara_vecino = calcular_mascara_borde(mapa, nx, ny, False)
-            if mascara_vecino == 15:
+            mascara_vecino = calcular_mascara_borde(mapa, nx, ny, False) & 15
+            if mascara_vecino&15 == 15:
                 for dx2,dy2 in VECINOS:
                     nx2 = nx + dx2
                     ny2 = ny + dy2
@@ -120,7 +132,7 @@ def calcular_terreno_base(mapa, x, y):
                             candidato = mapa[ny2][nx2]
                         elif PRIORIDAD_TERRENO[mapa[ny2][nx2]] < PRIORIDAD_TERRENO[candidato]:
                             candidato = mapa[ny2][nx2]
-            elif mascara_vecino in [5,7,10,11,13,14]:
+            elif mascara_vecino&15 in [5,7,10,11,13,14]:
                 for dx2,dy2 in VECINOS:
                     nx2 = nx + dx2
                     ny2 = ny + dy2
@@ -139,30 +151,39 @@ def autotile(mapa_terreno, name):
     for y in range(len(mapa_terreno)):
         for x in range(len(mapa_terreno[y])):
             mascara = calcular_mascara_borde(mapa_terreno, x, y)
+            mascara_simple = mascara & 15
             terreno_base = calcular_terreno_base(mapa_terreno, x, y)
             if mascara == 0 or (
-                mascara != 15 and PRIORIDAD_TERRENO[
+                mascara_simple != 15 and PRIORIDAD_TERRENO[
                     mapa_terreno[y][x]] < PRIORIDAD_TERRENO[terreno_base]
             ) or terreno_base == mapa_terreno[y][x]:
                 tile = random.choice(TERRAINS[mapa_terreno[y][x]]["tiles"])
             else:
                 border = "patch"
-                if mascara == 9:
+                if mascara_simple == 9:
                     border = "top_left"
-                elif mascara == 1:
+                elif mascara_simple == 1:
                     border = "top"
-                elif mascara == 3:
+                elif mascara_simple == 3:
                     border = "top_right"
-                elif mascara == 8:
+                elif mascara_simple == 8:
                     border = "left"
-                elif mascara == 2:
+                elif mascara_simple == 2:
                     border = "right"
-                elif mascara == 12:
+                elif mascara_simple == 12:
                     border = "bottom_left"
-                elif mascara == 4:
+                elif mascara_simple == 4:
                     border = "bottom"
-                elif mascara == 6:
+                elif mascara_simple == 6:
                     border = "bottom_right"
+                elif mascara == 16:
+                    border = "upper_left_diagonal"
+                elif mascara == 32:
+                    border = "upper_right_diagonal"
+                elif mascara == 64:
+                    border = "lower_left_diagonal"
+                elif mascara == 128:
+                    border = "lower_right_diagonal"
                 tile = random.choice(TERRAINS[terreno_base]["tiles"])
                 tile_region = (tile['x']*TILE_SIZE, tile['y']*TILE_SIZE, (tile['x'] + 1) * TILE_SIZE, (tile['y'] + 1) * TILE_SIZE)
                 map.paste(
