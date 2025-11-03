@@ -1,37 +1,22 @@
-import numpy as np
-import noise
 import random
 from PIL import Image
-import argparse
 from terrain import TILE_SIZE, TERRAINS, PRIORIDAD_TERRENO
-from biome import BIOMES, asignar_terrenos
 from settings import *
 
+ANCHO = 7
+ALTO = 7
 
-parser = argparse.ArgumentParser(prog='Map Maker', description='Crea mapas procedurales')
-parser.add_argument('-b', '--biome', help="Bioma con umbrales de ruido a utilizar", default="default")
-
-def generar_mapa_ruido(ancho, alto, escala, octavas, persistencia, lacunaridad, semilla):
-    """Genera una matriz 2D de ruido Perlin, escalada a [0, 1]."""
-    mapa_ruido = np.zeros((alto, ancho))
-    
-    for y in range(alto):
-        for x in range(ancho):
-            # Normalizamos las coordenadas (x, y) por la escala para calcular el ruido
-            valor_ruido = noise.pnoise2(
-                x * escala,
-                y * escala,
-                octaves=octavas,
-                persistence=persistencia,
-                lacunarity=lacunaridad,
-                repeatx=1024, # Permite un mapa "tileable" (sin costuras)
-                repeaty=1024,
-                base=semilla
-            )
-            # El pnoise2 devuelve un valor de [-1, 1], lo escalamos a [0, 1]
-            mapa_ruido[y][x] = (valor_ruido + 1) / 2
-            
-    return mapa_ruido
+def es_parche(mascara):
+    patch_masks = [
+        BIT_ESTE + BIT_OESTE,
+        BIT_NORTE + BIT_SUR,
+        BIT_NOROESTE + BIT_SURESTE,
+        BIT_NORESTE + BIT_SUROESTE,
+    ]
+    for patch_mask in patch_masks:
+        if (mascara & patch_mask) == patch_mask:
+            return True
+    return False
 
 # --- FUNCIÓN PRINCIPAL DE AUTOTILING ---
 def calcular_mascara_borde(mapa, x, y, recursive=True):
@@ -43,10 +28,11 @@ def calcular_mascara_borde(mapa, x, y, recursive=True):
     - 0 significa que no requiere borde.
     - Un valor entre 1 y 15 es el código de la máscara (0001 a 1111 binario).
     """
-    if recursive:
-        mascara_actual = calcular_mascara_borde(mapa, x, y, False)
-        if mascara_actual&15 == 15:
-            return mascara_actual
+
+    # if recursive:
+    #     mascara_actual = calcular_mascara_borde(mapa, x, y, False)
+    #     if es_parche(mascara_actual):
+    #         return mascara_actual
     
     # Lista de direcciones y sus desplazamientos (dy, dx) y valores de bit
     VECINOS = [
@@ -67,26 +53,16 @@ def calcular_mascara_borde(mapa, x, y, recursive=True):
     for dy, dx, bit_valor in VECINOS:
         ny, nx = y + dy, x + dx  # Coordenadas del vecino
                     
-        # 1. Comprobamos límites: ignorar si está fuera del mapa
-        if 0 <= ny < ALTO and 0 <= nx < ANCHO:
-                        
-            terreno_vecino = mapa[ny, nx]
-            igual_terreno = target_terreno == terreno_vecino
+        if 0 <= ny < ALTO and 0 <= nx < ANCHO:                        
+            terreno_vecino = mapa[ny][nx]
                             
-            # 2. Lógica de Borde:
-            # Comprobar si el vecino es un patch
-            if recursive:
-                mascara_vecino = calcular_mascara_borde(mapa, nx, ny, False)
-                terreno_vecino = calcular_terreno_base(mapa, nx, ny)
-                # Si es un patch, invertir la lógica
-                # Por ejemplo, un parche de agua es como si fuese arena
-                if (mascara_vecino & 15) in [5,7,10,11,13,14,15]:
-                    igual_terreno = target_terreno == terreno_vecino
-            # Si el vecino NO es el mismo terreno, se requiere un borde
-            # *o* si el vecino es el 'terreno central' que queremos bordear.
-                            
-            # En este caso: si el vecino NO es hierba, necesitamos un borde.
-            if not igual_terreno:
+            # if recursive:
+            #     mascara_vecino = calcular_mascara_borde(mapa, nx, ny, False)
+            #     if es_parche(mascara_vecino):
+            #         terreno_vecino = calcular_terreno_base(mapa, nx, ny)
+
+            if target_terreno != terreno_vecino and PRIORIDAD_TERRENO[
+                terreno_vecino] < PRIORIDAD_TERRENO[target_terreno]:
                 mascara_actual += bit_valor
                                 
     return mascara_actual
@@ -95,7 +71,7 @@ def calcular_terreno_base(mapa, x, y):
     terreno_actual = mapa[y][x]
     candidato = terreno_actual
     mascara_actual = calcular_mascara_borde(mapa, x, y, False)
-    if mascara_actual&15 in [5,7,10,11,13,14,15]:
+    if es_parche(mascara_actual):
         candidato = None
     VECINOS = [
         (-1, 0),
@@ -112,23 +88,13 @@ def calcular_terreno_base(mapa, x, y):
         ny = y + dy
         if 0 <= nx < ANCHO and 0 <= ny < ALTO:
             mascara_vecino = calcular_mascara_borde(mapa, nx, ny, False) & 15
-            if mascara_vecino&15 == 15:
+            if es_parche(mascara_vecino):
                 for dx2,dy2 in VECINOS:
                     nx2 = nx + dx2
                     ny2 = ny + dy2
                     if 0 <= nx2 < ANCHO and 0 <= ny2 < ALTO:
-                        if not candidato:
-                            candidato = mapa[ny2][nx2]
-                        elif PRIORIDAD_TERRENO[mapa[ny2][nx2]] < PRIORIDAD_TERRENO[candidato]:
-                            candidato = mapa[ny2][nx2]
-            elif mascara_vecino&15 in [5,7,10,11,13,14]:
-                for dx2,dy2 in VECINOS:
-                    nx2 = nx + dx2
-                    ny2 = ny + dy2
-                    if 0 <= nx2 < ANCHO and 0 <= ny2 < ALTO:
-                        if not candidato:
-                            candidato = mapa[y][x]
-                        if PRIORIDAD_TERRENO[mapa[ny2][nx2]] < PRIORIDAD_TERRENO[candidato]:
+                        if not candidato or PRIORIDAD_TERRENO[
+                            mapa[ny2][nx2]] < PRIORIDAD_TERRENO[candidato]:
                             candidato = mapa[ny2][nx2]
             elif not candidato or PRIORIDAD_TERRENO[mapa[ny][nx]] < PRIORIDAD_TERRENO[candidato]:
                     candidato = mapa[ny][nx]
@@ -188,16 +154,14 @@ def autotile(mapa_terreno, name):
             )
     map.save(name)
 
-if __name__ == "__main__":
-    args = parser.parse_args()
-    mapa_elevacion = generar_mapa_ruido(ANCHO, ALTO, ESCALA_RUIDO, OCTAVAS, PERSISTENCIA, LACUNARIDAD, SEMILLA_ELEVACION)
-    mapa_humedad = generar_mapa_ruido(ANCHO, ALTO, ESCALA_CLIMA, OCTAVAS, PERSISTENCIA, LACUNARIDAD, SEMILLA_HUMEDAD)
-    mapa_temperatura = generar_mapa_ruido(ANCHO, ALTO, ESCALA_CLIMA, OCTAVAS, PERSISTENCIA, LACUNARIDAD, SEMILLA_TEMP)
+mapa = [
+    ['water', 'sand','sand', 'sand', 'sand','sand', 'sand'],
+    ['grass', 'water','sand', 'sand', 'sand','grass', 'sand'],
+    ['grass', 'grass','water', 'sand', 'sand','sand', 'sand'],
+    ['grass', 'grass','grass', 'water', 'sand','sand', 'sand'],
+    ['grass', 'grass','grass', 'grass', 'water','sand', 'sand'],
+    ['grass', 'sand','grass', 'grass', 'grass','water', 'sand'],
+    ['grass', 'grass','grass', 'grass', 'grass','grass', 'water'],
+]
 
-    bioma = BIOMES[args.biome]
-
-    mapa_terreno = asignar_terrenos(
-        mapa_elevacion, mapa_humedad, mapa_temperatura,
-        bioma["ELEVACION"], bioma["HUMEDAD"], bioma["TEMPERATURA"]
-    )
-    autotile(mapa_terreno, f'examples/{args.biome}.png')
+autotile(mapa, 'examples/test.png')
