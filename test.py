@@ -10,8 +10,8 @@ def es_parche(mascara):
     patch_masks = [
         BIT_ESTE + BIT_OESTE,
         BIT_NORTE + BIT_SUR,
-        BIT_NOROESTE + BIT_SURESTE,
-        BIT_NORESTE + BIT_SUROESTE,
+        #BIT_NOROESTE + BIT_SURESTE,
+        #BIT_NORESTE + BIT_SUROESTE,
     ]
     for patch_mask in patch_masks:
         if (mascara & patch_mask) == patch_mask:
@@ -115,22 +115,34 @@ def autotile(mapa_terreno, name):
                 tile = random.choice(TERRAINS[mapa_terreno[y][x]]["tiles"])
             else:
                 border = "patch"
-                if mascara_simple == 9:
+                # if (x == 2 and y == 3):
+                #     print(mascara)
+                if es_parche(mascara):
+                    border = "patch"
+                elif mascara_simple == 9 or \
+                    (mascara & 40) == 40 or \
+                    (mascara & 65) == 65:
                     border = "top_left"
+                elif mascara_simple == 3 or \
+                    (mascara & 18) == 18 or\
+                    (mascara & 129) == 129:
+                    border = "top_right"
+                elif mascara_simple == 12 or \
+                    (mascara & 136) == 136 or\
+                    (mascara & 20) == 20:
+                    border = "bottom_left"
+                elif mascara_simple == 6 or \
+                    (mascara & 66) == 66 or\
+                    (mascara & 36) == 36:
+                    border = "bottom_right"
                 elif mascara_simple == 1:
                     border = "top"
-                elif mascara_simple == 3:
-                    border = "top_right"
                 elif mascara_simple == 8:
                     border = "left"
                 elif mascara_simple == 2:
                     border = "right"
-                elif mascara_simple == 12:
-                    border = "bottom_left"
                 elif mascara_simple == 4:
                     border = "bottom"
-                elif mascara_simple == 6:
-                    border = "bottom_right"
                 elif mascara == 16:
                     border = "upper_left_diagonal"
                 elif mascara == 32:
@@ -159,7 +171,7 @@ mapa = [
     ['grass', 'water','sand', 'sand', 'sand','grass', 'sand'],
     ['grass', 'grass','water', 'sand', 'sand','sand', 'sand'],
     ['grass', 'grass','grass', 'water', 'sand','sand', 'sand'],
-    ['grass', 'grass','grass', 'grass', 'water','sand', 'sand'],
+    ['grass', 'sand','grass', 'grass', 'water','sand', 'sand'],
     ['grass', 'sand','grass', 'grass', 'grass','water', 'sand'],
     ['grass', 'grass','grass', 'grass', 'grass','grass', 'water'],
 ]
