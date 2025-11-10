@@ -122,6 +122,26 @@ BIOMES = {
             "lava": 1.0
         }
     },
+    "oasis": {
+        "ELEVACION": {
+            "water": 0.43,
+            "sand": 0.47,
+            "grass": 0.75,
+            "rock": 1.0
+        },
+        "HUMEDAD": {
+            "sand": 0.55,
+            "ground": 0.55,
+            "grass": 0.9,
+            "dark_grass": 1.0
+        },
+        "TEMPERATURA": {
+            "dark_ground": 0.4,
+            "rock": 0.75,
+            "dark_rock": 0.9,
+            "lava": 1.0
+        }
+    },
     "steppe": {
         "ELEVACION": {
             "water": 0.15,

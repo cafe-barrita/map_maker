@@ -40,3 +40,5 @@ BORDER_MASKS = {
     "bottom_left": BIT_NORTE + BIT_NORESTE + BIT_ESTE,
     "bottom_right": BIT_NORTE + BIT_NOROESTE + BIT_OESTE
 }
+
+CORNERS = ["top_left", "top_right", "bottom_left", "bottom_right"]

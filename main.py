@@ -99,22 +99,34 @@ def autotile(mapa_terreno, name):
         for y in range(len(capa)):
             for x in range(len(capa[y])):
                 if capa[y][x]:
+                    border = "patch"
                     mascara_actual = calcular_mascara_borde(capa, x, y)
                     if mascara_actual == 255:
                         tile = random.choice(TERRAINS[terreno]["tiles"])
                     else:
-                        border = "patch"
                         for borde,mascara in BORDER_MASKS.items():
                             if (mascara_actual & mascara) == mascara:
                                 border = borde
                                 break
                         tile = TERRAINS[terreno]["borders"][border]
-                    tile_region = (tile['x']*TILE_SIZE, tile['y']*TILE_SIZE, (tile['x'] + 1) * TILE_SIZE, (tile['y'] + 1) * TILE_SIZE)
-                    map.paste(
-                        tileset.crop(tile_region),
-                        (x*TILE_SIZE, y*TILE_SIZE),
-                        mask=tileset.crop(tile_region)
-                    )
+                    if border in CORNERS:
+                        for corner in CORNERS:
+                            mascara = BORDER_MASKS[corner]
+                            if (mascara_actual & mascara) == mascara:
+                                tile = TERRAINS[terreno]["borders"][corner]
+                                tile_region = (tile['x']*TILE_SIZE, tile['y']*TILE_SIZE, (tile['x'] + 1) * TILE_SIZE, (tile['y'] + 1) * TILE_SIZE)
+                                map.paste(
+                                    tileset.crop(tile_region),
+                                    (x*TILE_SIZE, y*TILE_SIZE),
+                                    mask=tileset.crop(tile_region)
+                                )
+                    else:
+                        tile_region = (tile['x']*TILE_SIZE, tile['y']*TILE_SIZE, (tile['x'] + 1) * TILE_SIZE, (tile['y'] + 1) * TILE_SIZE)
+                        map.paste(
+                            tileset.crop(tile_region),
+                            (x*TILE_SIZE, y*TILE_SIZE),
+                            mask=tileset.crop(tile_region)
+                        )
     map.save(name)
 
 if __name__ == "__main__":
