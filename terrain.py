@@ -113,6 +113,28 @@ TERRAINS = {
             "lower_right_diagonal": {"x": 7, "y": 6},
         }
     },
+    "rain_water": {
+        "tiles": [
+            {"x": 18, "y": 5},
+            {"x": 19, "y": 5},
+            {"x": 20, "y": 5},
+        ],
+        "borders": {
+            "patch": {"x": 18, "y": 0},
+            "top_left": {"x": 18, "y": 2},
+            "top": {"x": 19, "y": 2},
+            "top_right": {"x": 20, "y": 2},
+            "left": {"x": 18, "y": 3},
+            "right": {"x": 20, "y": 3},
+            "bottom_left": {"x": 18, "y": 4},
+            "bottom": {"x": 19, "y": 4},
+            "bottom_right": {"x": 20, "y": 4},
+            "upper_left_diagonal": {"x": 20, "y": 1},
+            "upper_right_diagonal": {"x": 19, "y": 1},
+            "lower_left_diagonal": {"x": 20, "y": 0},
+            "lower_right_diagonal": {"x": 19, "y": 0},
+        }
+    },
     "dark_ground": {
         "tiles": [
             {"x": 4, "y": 5},
@@ -207,7 +229,50 @@ PRIORIDAD_TERRENO = {
     "grass": 3,
     "dark_grass": 4,
     "dark_ground": 5,
-    "rock": 6,
-    "dark_rock": 7,
-    "lava": 8
+    "rain_water": 6,
+    "rock": 7,
+    "dark_rock": 8,
+    "lava": 9
+}
+
+OBJETOS = {
+    "seastar": [
+        [{"x": 16, "y": 22}]
+    ],
+    "cactus": [
+        [{"x": 16, "y": 18}, {"x": 17, "y": 18}],
+        [{"x": 16, "y": 19}, {"x": 17, "y": 19}]
+    ],
+    "small_cactus": [
+        [{"x": 15, "y": 22}]
+    ],
+    "boulder": [
+        [{"x": 19, "y": 20}]
+    ],
+    "mushroom": [
+        [{"x": 17, "y": 22}]
+    ],
+    "leaves": [
+        [{"x": 15, "y": 20}]
+    ],
+    "water_lily": [
+        [{"x": 12, "y": 22}]
+    ],
+    "reeds": [
+        [{"x": 17, "y": 20}],
+        [{"x": 17, "y": 21}]
+    ],
+    "puddle": [
+        [{"x": 18, "y": 2}, {"x": 19, "y": 2}, {"x": 20, "y": 2}],
+        [{"x": 18, "y": 4}, {"x": 20, "y": 0}, {"x": 20, "y": 3}],
+        [{"x": 18, "y": 0}, {"x": 18, "y": 4}, {"x": 20, "y": 4}]
+    ],
+    "small_puddle": [
+        [{"x": 18, "y": 0}]
+    ],
+    "lava_puddle": [
+        [{"x": 9, "y": 14}, {"x": 10, "y": 14}, {"x": 11, "y": 14}],
+        [{"x": 9, "y": 15}, {"x": 10, "y": 12}, {"x": 11, "y": 16}],
+        [{"x": 9, "y": 16}, {"x": 11, "y": 16}, {"x": 9, "y": 12}]
+    ]
 }

@@ -12,15 +12,23 @@ BIOMES = {
         "HUMEDAD": {
             "sand": 0.15,
             "ground": 0.25,
-            "grass": 0.7,
-            "dark_grass": 1.0
+            "grass": 0.5,
+            "dark_grass": 0.65,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.25,
             "rock": 0.5,
             "dark_rock": 0.7,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 8,
+        "OBJECTS": [
+            ("rock", "boulder"),
+            ("grass", "puddle"),
+            ("dark_grass", "small_puddle"),
+            ("rain_water", "reeds")
+        ]
     },
     "sea": {
         "ELEVACION": {
@@ -33,18 +41,23 @@ BIOMES = {
             "sand": 0.1,
             "ground": 0.2,
             "grass": 0.6,
-            "dark_grass": 1.0
+            "dark_grass": 1.0,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.2,
             "rock": 0.8,
             "dark_rock": 0.9,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 2,
+        "OBJECTS": [
+            ("rock", "boulder")
+        ]
     },
     "beach": {
         "ELEVACION": {
-            "water": 0.47,
+            "water": 0.48,
             "sand": 0.65,
             "grass": 0.9,
             "rock": 1.0
@@ -53,14 +66,19 @@ BIOMES = {
             "sand": 0.1,
             "ground": 0.2,
             "grass": 0.6,
-            "dark_grass": 1.0
+            "dark_grass": 1.0,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.4,
             "rock": 0.8,
             "dark_rock": 0.9,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 6,
+        "OBJECTS": [
+            ("sand", "seastar"),
+        ]
     },
     "highlands": {
         "ELEVACION": {
@@ -73,34 +91,50 @@ BIOMES = {
             "sand": 0.1,
             "ground": 0.4,
             "grass": 0.55,
-            "dark_grass": 1.0
+            "dark_grass": 1.0,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.4,
             "rock": 0.8,
             "dark_rock": 0.9,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 8,
+        "OBJECTS": [
+            ("rock", "boulder"),
+            ("grass", "leaves"),
+        ]
     },
     "grassland": {
         "ELEVACION": {
             "water": 0.15,
-            "sand": 0.37,
-            "grass": 0.57,
+            "sand": 0.35,
+            "grass": 0.6,
             "rock": 1.0
         },
         "HUMEDAD": {
             "sand": 0.1,
-            "ground": 0.2,
-            "grass": 0.57,
-            "dark_grass": 1.0
+            "ground": 0.1,
+            "grass": 0.5,
+            "dark_grass": 0.58,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.4,
             "rock": 0.8,
             "dark_rock": 0.9,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 12,
+        "OBJECTS": [
+            ("rock", "boulder"),
+            ("grass", "puddle"),
+            ("grass", "leaves"),
+            ("dark_grass", "leaves"),
+            ("dark_grass", "mushroom"),
+            ("rain_water", "reeds")
+        ]
     },
     "desert": {
         "ELEVACION": {
@@ -113,34 +147,47 @@ BIOMES = {
             "sand": 0.52,
             "ground": 0.62,
             "grass": 0.9,
-            "dark_grass": 1.0
+            "dark_grass": 1.0,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.4,
             "rock": 0.75,
             "dark_rock": 0.9,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 12,
+        "OBJECTS": [
+            ("rock", "boulder"),
+            ("sand", "small_cactus"),
+            ("sand", "cactus")
+        ]
     },
     "oasis": {
         "ELEVACION": {
-            "water": 0.43,
-            "sand": 0.47,
+            "water": 0.15,
+            "sand": 0.45,
             "grass": 0.75,
             "rock": 1.0
         },
         "HUMEDAD": {
-            "sand": 0.55,
-            "ground": 0.55,
-            "grass": 0.9,
-            "dark_grass": 1.0
+            "sand": 0.52,
+            "ground": 0.52,
+            "grass": 0.58,
+            "dark_grass": 0.58,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.4,
             "rock": 0.75,
             "dark_rock": 0.9,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 12,
+        "OBJECTS": [
+            ("grass", "small_puddle"),
+            ("sand", "cactus")
+        ]
     },
     "steppe": {
         "ELEVACION": {
@@ -153,14 +200,20 @@ BIOMES = {
             "sand": 0.25,
             "ground": 0.55,
             "grass": 0.8,
-            "dark_grass": 1.0
+            "dark_grass": 1.0,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.4,
             "rock": 0.8,
             "dark_rock": 0.9,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 6,
+        "OBJECTS": [
+            ("rock", "boulder"),
+            ("ground", "cactus")
+        ]
     },
     "mountain": {
         "ELEVACION": {
@@ -173,14 +226,20 @@ BIOMES = {
             "sand": 0.1,
             "ground": 0.35,
             "grass": 0.5,
-            "dark_grass": 1.0
+            "dark_grass": 0.6,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.45,
             "rock": 0.8,
             "dark_rock": 0.9,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 8,
+        "OBJECTS": [
+            ("rock", "boulder"),
+            ("grass", "leaves"),
+        ]
     },
     "volcano": {
         "ELEVACION": {
@@ -193,34 +252,48 @@ BIOMES = {
             "sand": 0.3,
             "ground": 0.52,
             "grass": 0.75,
-            "dark_grass": 1.0
+            "dark_grass": 1.0,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.25,
             "rock": 0.44,
             "dark_rock": 0.52,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 4,
+        "OBJECTS": [
+            ("rock", "boulder")
+        ]
     },
     "hotspring": {
         "ELEVACION": {
-            "water": 0.42,
-            "sand": 0.42,
-            "grass": 0.45,
+            "water": 0.15,
+            "sand": 0.15,
+            "grass": 0.47,
             "rock": 1.0
         },
         "HUMEDAD": {
-            "sand": 0.25,
-            "ground": 0.35,
-            "grass": 0.55,
-            "dark_grass": 1.0
+            "sand": 0.15,
+            "ground": 0.15,
+            "grass": 0.54,
+            "dark_grass": 0.54,
+            "rain_water": 1.0
         },
         "TEMPERATURA": {
             "dark_ground": 0.25,
-            "rock": 0.5,
-            "dark_rock": 0.55,
+            "rock": 0.45,
+            "dark_rock": 0.75,
             "lava": 1.0
-        }
+        },
+        "MAX_OBJECTS": 16,
+        "OBJECTS": [
+            ("rock", "boulder"),
+            ("grass", "puddle"),
+            ("dark_rock", "lava_puddle"),
+            ("rain_water", "water_lily"),
+            ("rain_water", "reeds")
+        ]
     },
 }
 
@@ -248,8 +321,10 @@ def asignar_terrenos(mapa_elevacion, mapa_humedad, mapa_temperatura,
                     mapa_terrenos[y][x] = "ground"
                 elif humedad < umbrales_humedad["grass"]:
                     mapa_terrenos[y][x] = "grass"
-                else:
+                elif humedad < umbrales_humedad["dark_grass"]:
                     mapa_terrenos[y][x] = "dark_grass"
+                else:
+                    mapa_terrenos[y][x] = "rain_water"
             else:
                 if temp < umbrales_temp["dark_ground"]:
                     mapa_terrenos[y][x] = "dark_ground"

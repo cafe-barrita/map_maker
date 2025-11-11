@@ -1,8 +1,9 @@
 import numpy as np
 
-TILE_SIZE = 32
 ANCHO = 48
 ALTO = 48
+
+MAX_ATTEMPTS = 10
 
 # --- CONFIGURACIÓN DEL MAPA ---
 ESCALA_RUIDO = 0.03  # Frecuencia: Cuanto menor, más grandes los "parches" (biomas)

@@ -3,7 +3,7 @@ import noise
 import random
 from PIL import Image
 import argparse
-from terrain import TILE_SIZE, TERRAINS, PRIORIDAD_TERRENO
+from terrain import TILE_SIZE, TERRAINS, PRIORIDAD_TERRENO, OBJETOS
 from biome import BIOMES, asignar_terrenos
 from settings import *
 
@@ -90,7 +90,23 @@ def calcular_matriz_capa(mapa_terreno, terreno):
                 mapa_capa[y][x] = 1
     return mapa_capa
 
-def autotile(mapa_terreno, name):
+def buscar_posicion_valida(mapa_terreno, terreno, obj_x, obj_y, margen=1):
+    for i in range(MAX_ATTEMPTS):
+        nx = random.randint(margen, ANCHO - (obj_x + margen))
+        ny = random.randint(margen, ALTO - (obj_y + margen))
+        valid = True
+        for y in range(ny - margen, ny + obj_y + margen):
+            for x in range(nx - margen, nx + obj_x + margen):
+                if mapa_terreno[y][x] != terreno:
+                    valid = False
+                    break
+            if not valid:
+                break
+        if valid:
+            return (nx,ny)
+    return None
+
+def autotile(mapa_terreno, bioma, name):
     tileset = Image.open("tileset.png").convert("RGBA")
     map = Image.new("RGBA", (ANCHO * TILE_SIZE, ALTO * TILE_SIZE), (255, 255, 255,255))
     terrenos = calcular_terrenos(mapa_terreno)
@@ -127,6 +143,29 @@ def autotile(mapa_terreno, name):
                             (x*TILE_SIZE, y*TILE_SIZE),
                             mask=tileset.crop(tile_region)
                         )
+    if bioma.get("MAX_OBJECTS"):
+        for i in range(random.randint(0, bioma["MAX_OBJECTS"])):
+            terreno,objeto = random.choice(bioma["OBJECTS"])
+            tiles = OBJETOS[objeto]
+            posicion = buscar_posicion_valida(mapa_terreno, terreno, len(tiles[0]), len(tiles))
+            if posicion:
+                y = posicion[1]
+                for row in tiles:
+                    x = posicion[0]
+                    for tile in row:
+                        tile_region = (
+                            tile['x']*TILE_SIZE,
+                            tile['y']*TILE_SIZE,
+                            (tile['x'] + 1) * TILE_SIZE,
+                            (tile['y'] + 1) * TILE_SIZE
+                        )
+                        map.paste(
+                            tileset.crop(tile_region),
+                            (x*TILE_SIZE, y*TILE_SIZE),
+                            mask=tileset.crop(tile_region)
+                        )
+                        x += 1
+                    y += 1
     map.save(name)
 
 if __name__ == "__main__":
@@ -141,4 +180,4 @@ if __name__ == "__main__":
         mapa_elevacion, mapa_humedad, mapa_temperatura,
         bioma["ELEVACION"], bioma["HUMEDAD"], bioma["TEMPERATURA"]
     )
-    autotile(mapa_terreno, f'examples/{args.biome}.png')
+    autotile(mapa_terreno, bioma, f'examples/{args.biome}.png')
