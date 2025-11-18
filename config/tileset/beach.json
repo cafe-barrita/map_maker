@@ -1,0 +1,54 @@
+{
+    "name": "beach",
+    "terrains": [
+        {
+            "name": "deep_water",
+            "height": 0.4,
+            "humidity": 1.0,
+            "temperature": 1.0
+        },
+        {
+            "name": "shallow_water",
+            "height": 0.5,
+            "humidity": 1.0,
+            "temperature": 1.0
+        },
+        {
+            "name": "sand",
+            "height": 0.8,
+            "humidity": 1.0,
+            "temperature": 1.0
+        },
+        {
+            "name": "grass",
+            "height": 1.0,
+            "humidity": 1.0,
+            "temperature": 1.0
+        }
+    ],
+    "terrain_priority": {
+        "deep_water": 0,
+        "shallow_water": 1,
+        "sand": 2,
+        "grass": 3
+    },
+    "objects": [
+        {
+            "object": "rock_on_water1",
+            "terrain": "shallow_water"
+        },
+        {
+            "object": "rock_on_water2",
+            "terrain": "shallow_water"
+        },
+        {
+            "object": "rock_on_water3",
+            "terrain": "shallow_water"
+        },
+        {
+            "object": "yellow_flower",
+            "terrain": "grass"
+        }
+    ],
+    "object_rate": 0.2
+}

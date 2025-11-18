@@ -1,0 +1,87 @@
+{
+    "name": "tileset",
+    "tile_size": 16,
+    "terrains": {
+        "deep_water": {
+            "tiles": [1],
+            "borders": {
+                "patch": 0,
+                "upper_left_diagonal": 0,
+                "upper_right_diagonal": 0,
+                "lower_left_diagonal": 0,
+                "lower_right_diagonal": 0,
+                "top": 0,
+                "left": 0,
+                "right": 0,
+                "bottom": 0,
+                "diagonal_left_right": 0,
+                "diagonal_right_left": 0,
+                "top_left": 0,
+                "top_right": 0,
+                "bottom_left": 0,
+                "bottom_right": 0
+            }
+        },
+        "shallow_water": {
+            "tiles": [11],
+            "borders": {
+                "patch": 0,
+                "upper_left_diagonal": 12,
+                "upper_right_diagonal": 13,
+                "lower_left_diagonal": 14,
+                "lower_right_diagonal": 15,
+                "top": 16,
+                "left": 17,
+                "right": 18,
+                "bottom": 19,
+                "diagonal_left_right": 111,
+                "diagonal_right_left": 112,
+                "top_left": 113,
+                "top_right": 114,
+                "bottom_left": 115,
+                "bottom_right": 116
+            }
+        },
+        "sand": {
+            "tiles": [21],
+            "borders": {
+                "patch": 0,
+                "upper_left_diagonal": 22,
+                "upper_right_diagonal": 23,
+                "lower_left_diagonal": 24,
+                "lower_right_diagonal": 25,
+                "top": 26,
+                "left": 27,
+                "right": 28,
+                "bottom": 29,
+                "diagonal_left_right": 121,
+                "diagonal_right_left": 122,
+                "top_left": 123,
+                "top_right": 124,
+                "bottom_left": 125,
+                "bottom_right": 126
+            }
+        },
+        "grass": {
+            "tiles": [31],
+            "borders": {
+                "patch": 0,
+                "upper_left_diagonal": 32,
+                "upper_right_diagonal": 33,
+                "lower_left_diagonal": 34,
+                "lower_right_diagonal": 35,
+                "top": 36,
+                "left": 37,
+                "right": 38,
+                "bottom": 39,
+                "diagonal_left_right": 131,
+                "diagonal_right_left": 132,
+                "top_left": 133,
+                "top_right": 134,
+                "bottom_left": 135,
+                "bottom_right": 136
+            }
+        }
+    },
+    "objects": []
+}

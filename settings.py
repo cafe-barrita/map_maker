@@ -1,9 +1,9 @@
 import numpy as np
 
-ANCHO = 48
-ALTO = 48
+ANCHO = 512
+ALTO = 512
 
-MAX_ATTEMPTS = 10
+MAX_ATTEMPTS = 20
 
 # --- CONFIGURACIÓN DEL MAPA ---
 ESCALA_RUIDO = 0.03  # Frecuencia: Cuanto menor, más grandes los "parches" (biomas)
@@ -36,10 +36,10 @@ BORDER_MASKS = {
     "left": BIT_NORTE + BIT_NORESTE + BIT_ESTE + BIT_SURESTE + BIT_SUR,
     "right": BIT_NORTE + BIT_NOROESTE + BIT_OESTE + BIT_SUROESTE + BIT_SUR,
     "bottom": BIT_ESTE + BIT_NORESTE + BIT_NORTE + BIT_NOROESTE + BIT_OESTE,
+    "diagonal_left_right": BIT_ESTE + BIT_SURESTE + BIT_SUR + BIT_NORTE + BIT_NOROESTE + BIT_OESTE,
+    "diagonal_right_left": BIT_OESTE + BIT_SUROESTE + BIT_SUR + BIT_NORTE + BIT_NORESTE + BIT_ESTE,
     "top_left": BIT_ESTE + BIT_SURESTE + BIT_SUR,
     "top_right": BIT_OESTE + BIT_SUROESTE + BIT_SUR,
     "bottom_left": BIT_NORTE + BIT_NORESTE + BIT_ESTE,
     "bottom_right": BIT_NORTE + BIT_NOROESTE + BIT_OESTE
 }
-
-CORNERS = ["top_left", "top_right", "bottom_left", "bottom_right"]
